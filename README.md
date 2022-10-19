@@ -1,6 +1,6 @@
 # Projet geoloc_invirtus
-Projet de test pour invirtus Technologies.
 
+Technical test project for Invirtus-Technologies.
 
 ## To start
 
