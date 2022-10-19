@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+<main id="home">
+    <a href="{{ path('app_equipement') }}" class="button_home">Géolocalisez vos équipements</a>
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<!-- Import Particles.js and app.js files -->
+<script src="https://cldup.com/S6Ptkwu_qA.js"></script>
+<script src="{{ asset('assets/js/script.js') }}"></script>
+
+{% endblock %}

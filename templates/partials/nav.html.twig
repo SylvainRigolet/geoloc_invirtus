@@ -1,0 +1,65 @@
+<nav>
+    <select class="" id="equipement_select" onchange="document.location.href=this.value">
+        <option value="{{ path('app_equipement') }}"  selected >--Equipement--</option>
+        {% for key , value in listEquipements %}
+            <option value="{{ path('app_equipement_id', {"id" : key })}}" {% if app.request.get('_route') == 'app_equipement_id' and key == app.request.get('id') %} selected {% endif %} > Equipement n° : {{key}}</option>
+        {% endfor %}
+    </select>
+
+    {% if app.request.get('_route') == 'app_equipement_id' %}
+        <h1> Equipement n°: {{app.request.get('id')}} </h1>
+    {% else %}
+        <h1> Géolocalisation </h1>
+    {% endif %}
+
+    {% if app.request.get('_route') == 'app_equipement_id' %}
+        <button onclick="getlocations()" class="button"> Historique de géolocalisation </button>
+    {% else %}
+        <button class="button" disabled> Historique de géolocalisation </button>
+    {% endif %}
+
+    <div id="historic" style="display:none">
+        <pre>
+            <code id="data">
+                {# Historique de géolocalisation #}
+            </code>
+        </pre>
+    </div>
+</nav>
+
+{% block javascripts %}
+
+    <script>
+
+        function getlocations() {
+            var div = document.getElementById("historic");
+            var code = document.getElementById("data");
+
+            var id = "{{app.request.get('id')}}";
+
+            var url = Routing.generate('app_getLocations_id', { 'id': id });
+
+            //Appel a ma function getLocations + ajout des data dans la balise code.
+            fetch(url)
+                .then(function(res) {
+                    if (res.ok) {
+                    return res.json();
+                    }
+                })
+                .then(function(value) {
+                    code.innerHTML = JSON.stringify(value, null, 4)
+                })
+                .catch(function(err) {
+                    console.log('Erreur Api')
+                });
+
+            //Affichage/desaffichage de l'historique.
+            if (div.style.display === "none") { 
+                div.style.display = "block";
+             } else {
+                div.style.display = "none";
+             }  
+        }
+    </script>
+
+{% endblock %} 

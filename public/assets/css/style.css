@@ -1,0 +1,118 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+h1 {
+    color: white;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    width: 90%;
+    height: 60px;
+    top: 0px;
+    right: 5%;
+    z-index: 1;
+    background-color: hsl(204, 100%, 31%, 0.8);
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.45);
+}
+
+select {
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.45);
+  }
+
+pre, code {
+    margin: 0 !important;
+}  
+
+a:link 
+{ 
+ text-decoration: none; 
+} 
+
+.button {
+    background-color: #14a107;
+    border: none;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: .4s;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.45);
+
+  }
+.button:hover:enabled {
+    background-color: #0d8b02;
+}
+
+#historic {
+    position: fixed;
+    top: 100px;
+    right: 10px;
+    max-height: calc(100vh - 120px);
+    background-color: hsl(204, 100%, 31%, 0.8);
+    border-radius: 10px;
+    color: white;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.45);
+
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+#map {
+    z-index: 0 !important;
+    width:100%; 
+    height: 100%;
+}
+
+#alert {
+    position: fixed;
+    top: 60px;
+    margin: 0px;
+    width: 90%;
+    right: 5%;
+    z-index: 2;
+    opacity: 0.9;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.45);
+}
+
+#home {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: hsl(204, 100%, 31%);
+    width: 100%;
+    height: 100%;
+}
+
+.button_home {
+        display: inline-block;
+        padding: 0.5em 1em;
+        color: #67c5ff;
+        border: double 4px #67c5ff;
+        border-radius: 5px;
+        transition: .4s;
+        box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.45);
+}
+.button_home:hover {
+    background: #147196;
+    color: white;
+}

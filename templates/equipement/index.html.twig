@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Géolocalisation{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('notice') %}
+        <div id ="alert" class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% block nav %}
+        {% embed "partials/nav.html.twig" %}
+
+        {% endembed %}
+    {% endblock %}
+
+        <div id="map" >
+            {# Map leaflet #}
+        </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            initialize();
+        });
+
+        function initialize() {
+
+            var map = L.map('map').setView([46.833, 2.333], 6);
+
+            var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { 
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 20
+            });
+
+            map.addLayer(osmLayer);
+
+            //Condition pour ne pas avoir d'erreur avec la variable 'equipemet' (la map avec et sans infos partage la même vue).
+            {% if equipement is defined %} 
+
+                var lisLocations = {{ equipement | json_encode | raw }}
+
+                var listForPlolyline =[];
+
+                //on boucle sur chaque tableau contenant les coordonné.
+                for(var i = 0; i < lisLocations.length; i++) {
+                    
+                    //Convertion de la date.
+                    var date = new Date(lisLocations[i].datetime);
+                    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+                    var newDate = date.toLocaleDateString('fr-CA', options);
+
+                    //Ajout de chaque marqeur (latitude, longitude, date nouveau format).
+                    var marker = L.marker([lisLocations[i].latitude, lisLocations[i].longitude]).addTo(map).bindPopup('Le : ' + newDate);
+                    
+                    //Ajout de chaque coordonné dans le tableau listpolyline.
+                    listForPlolyline.push([lisLocations[i].latitude, lisLocations[i].longitude]);
+                };
+
+                //On relie les marqueurs avec polyline.
+                var firstpolyline = new L.Polyline(listForPlolyline, {
+                    color: 'blue',
+                    weight: 3,
+                    opacity: 0.8,
+                    smoothFactor: 1
+                });
+        
+                firstpolyline.addTo(map);
+
+                //Zoom sur le groupement de marqueurs
+                var bounds = new L.LatLngBounds(listForPlolyline);
+
+                map.fitBounds(bounds);
+
+            {% endif %}
+
+        }
+    </script>
+
+{% endblock %}
